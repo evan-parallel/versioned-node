@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: lint commit message
-        if: !env.isFix && !env.isFeat && !env.isBreaking
+        if: ${{ !env.isFix && !env.isFeat && !env.isBreaking }}
         run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
       - name: set github user
         run: |
