@@ -12,6 +12,8 @@ jobs:
       isBreaking: ${{ contains(github.event.commits[0].message, 'BREAKING CHANGE') }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.EVAN_PAT }}
       - name: lint commit message
         if: ${{ env.isFix == 'false' && env.isFeat == 'false' && env.isBreaking == 'false' }}
         run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
