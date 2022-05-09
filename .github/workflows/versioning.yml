@@ -1,10 +1,5 @@
 name: versioning
-on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'package.json'
+on: workflow_call
 jobs:
   bump-version:
     runs-on: "ubuntu-latest"

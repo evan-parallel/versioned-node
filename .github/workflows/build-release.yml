@@ -1,8 +1,5 @@
-name: releasing
-on:
-  push:
-    tags:
-      - "v*.*.*"
+name: build-release
+on: workflow_call
 
 jobs:
   build-release:
