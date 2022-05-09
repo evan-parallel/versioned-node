@@ -11,8 +11,6 @@ jobs:
       isFeat: ${{ startsWith(github.event.commits[0].message, 'feat') }}
       isBreaking: ${{ contains(github.event.commits[0].message, 'BREAKING CHANGE') }}
     steps:
-      - name: print env
-        run: echo ${{ env }}
       - uses: actions/checkout@v3
       - name: lint commit message
         if: ${{ env.isFix == 'false' && env.isFeat == 'false' && env.isBreaking == 'false' }}
@@ -21,7 +19,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-      - name: update package.json version (major)
+      - name: update package.json version
         env:
           VersionLevel: |-
             ${{
@@ -30,8 +28,8 @@ jobs:
               'patch'
             }}
         run: yarn version --${{ env.VersionLevel }}
-        # run: NEW_VERSION=`yarn version --patch | grep "New version" | awk '{printf $4}'`
       - name: push bumped version + tags
         run: |
           git push
           git push origin --tags
+
