@@ -15,5 +15,7 @@ jobs:
       - name: update package.json version
         run: yarn version --patch
         # run: NEW_VERSION=`yarn version --patch | grep "New version" | awk '{printf $4}'`
-      - name: push bumped version
-        run: git push
+      - name: push bumped version + tags
+        run: |
+          git push
+          git push origin --tags
