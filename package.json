@@ -1,6 +1,6 @@
 {
   "name": "versioned-node",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "main": "index.js",
   "repository": "github-parallel:evan-parallel/versioned-node.git",
   "author": "Evan Cook <evan.cook@parallellearning.com>",
