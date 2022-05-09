@@ -27,11 +27,12 @@ jobs:
           git config user.email github-actions@github.com
       - name: update package.json version (major)
         env:
-          VersionLevel: ${{
-            (env.isBreaking == 'true' && 'major') ||
-            (env.isFeat == 'true' && 'minor') ||
-            'patch'
-          }}
+          VersionLevel: patch
+          # VersionLevel: ${{
+          # (env.isBreaking == 'true' && 'major') ||
+          # (env.isFeat == 'true' && 'minor') ||
+          # 'patch'
+          # }}
         run: yarn version --${{ env.VersionLevel }}
         # run: NEW_VERSION=`yarn version --patch | grep "New version" | awk '{printf $4}'`
       - name: push bumped version + tags
