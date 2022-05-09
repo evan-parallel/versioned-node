@@ -6,13 +6,20 @@ on:
 jobs:
   bump-version:
     runs-on: "ubuntu-latest"
+    env:
+      isFix: startsWith(github.event.commits[0].message, 'fix')
+      ifFeat: startsWith(github.event.commits[0].message, 'feat')
+      isBreaking: contains(github.event.commits[0].message, 'BREAKING CHANGE')
     steps:
       - uses: actions/checkout@v3
+      - name: lint commit message
+        if: !env.isFix && !env.isFeat && !env.isBreaking
+        run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
       - name: set github user
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-      - name: update package.json version
+      - name: update package.json version (major)
         run: yarn version --patch
         # run: NEW_VERSION=`yarn version --patch | grep "New version" | awk '{printf $4}'`
       - name: push bumped version + tags
