@@ -25,7 +25,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
       - name: update package.json version (major)
-        run: yarn version --${{ if env.isFix == 'false' patch
+        run: yarn version --patch
         # run: NEW_VERSION=`yarn version --patch | grep "New version" | awk '{printf $4}'`
       - name: push bumped version + tags
         run: |
