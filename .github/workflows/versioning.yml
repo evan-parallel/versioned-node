@@ -11,6 +11,8 @@ jobs:
       ifFeat: ${{ startsWith(github.event.commits[0].message, 'feat') }}
       isBreaking: ${{ contains(github.event.commits[0].message, 'BREAKING CHANGE') }}
     steps:
+      - name: print env
+        run: echo ${{ env }}
       - uses: actions/checkout@v3
       - name: lint commit message
         if: ${{ !env.isFix && !env.isFeat && !env.isBreaking }}
