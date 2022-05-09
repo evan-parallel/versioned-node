@@ -16,7 +16,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: lint commit message
         if: ${{ env.isFix == 'false' && env.isFeat == 'false' && env.isBreaking == 'false' }}
-        if: ${{ env.isFeat == 'false' }}
         run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
           #- name: lint commit message logic
           #if: ${{ env.isFeat != 'false' }}
