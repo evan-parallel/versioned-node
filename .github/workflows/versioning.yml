@@ -20,7 +20,7 @@ jobs:
         run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
       - name: lint commit message logic
         if: ${{ env.isFeat != 'false' }}
-        run: echo "::warning ::$wtf ... ${{ env.isFix }} - ${{ contains(env.isFix, 'false' }} - ${{ startsWith(env.isFix, 'false' }}"
+        run: echo "::warning ::$wtf ... ${{ env.isFix }} - ${{ contains(env.isFix, 'false') }} - ${{ startsWith(env.isFix, 'false') }}"
       - name: set github user
         run: |
           git config user.name github-actions
