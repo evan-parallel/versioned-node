@@ -10,4 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
 
