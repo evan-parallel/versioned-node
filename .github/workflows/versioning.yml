@@ -8,25 +8,31 @@ jobs:
     runs-on: "ubuntu-latest"
     env:
       isFix: ${{ startsWith(github.event.commits[0].message, 'fix:') }}
-      ifFeat: ${{ startsWith(github.event.commits[0].message, 'feat:') }}
+      isFeat: ${{ startsWith(github.event.commits[0].message, 'feat:') }}
       isBreaking: ${{ contains(github.event.commits[0].message, 'BREAKING CHANGE') }}
     steps:
       - name: print env
         run: echo ${{ env }}
       - uses: actions/checkout@v3
       - name: lint commit message
-        # if: ${{ env.isFix == 'false' && env.isFeat == 'false' && env.isBreaking == 'false' }}
+        if: ${{ env.isFix == 'false' && env.isFeat == 'false' && env.isBreaking == 'false' }}
         if: ${{ env.isFeat == 'false' }}
         run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
-      - name: lint commit message logic
-        if: ${{ env.isFeat != 'false' }}
-        run: echo "::warning ::$wtf ... ${{ env.isFeat }} - ${{ contains(env.isFeat, 'false') }} - ${{ startsWith(env.isFeat, 'false') }} - ${{ endsWith(env.isFeat, 'false') }} - ${{ env.isFeat == 'false' }}"
+          #- name: lint commit message logic
+          #if: ${{ env.isFeat != 'false' }}
+          #run: echo "::warning ::$wtf ... ${{ env.isFeat }} - ${{ contains(env.isFeat, 'false') }} - ${{ startsWith(env.isFeat, 'false') }} - ${{ endsWith(env.isFeat, 'false') }} - ${{ env.isFeat == 'false' }}"
       - name: set github user
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
       - name: update package.json version (major)
-        run: yarn version --patch
+        env:
+          VersionLevel: ${{
+            (env.isBreaking == 'true' && 'major') ||
+            (env.isFeat == 'true' && 'minor') ||
+            'patch'
+          }}
+        run: yarn version --${{ env.VersionLevel }}
         # run: NEW_VERSION=`yarn version --patch | grep "New version" | awk '{printf $4}'`
       - name: push bumped version + tags
         run: |
