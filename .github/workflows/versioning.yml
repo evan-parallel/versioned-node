@@ -1,23 +1,20 @@
 name: versioning
 on:
   workflow_call:
+    inputs:
+      scope:
+        required: true
+        type: string
     secrets:
-      EVAN_PAT:
+      PAT:
         required: true
 jobs:
   bump-version:
     runs-on: "ubuntu-latest"
-    env:
-      isFix: ${{ startsWith(github.event.commits[0].message, 'fix') }}
-      isFeat: ${{ startsWith(github.event.commits[0].message, 'feat') }}
-      isBreaking: ${{ contains(github.event.commits[0].message, 'BREAKING CHANGE') }}
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.EVAN_PAT }}
-      - name: lint commit message
-        if: ${{ env.isFix == 'false' && env.isFeat == 'false' && env.isBreaking == 'false' }}
-        run: echo "::warning ::main commits should be specified as fix, feature, or breaking change"
+          token: ${{ secrets.PAT }}
       - name: set github user
         run: |
           git config user.name github-actions
@@ -26,8 +23,8 @@ jobs:
         env:
           VersionLevel: |-
             ${{
-              (env.isBreaking == 'true' && 'major') ||
-              (env.isFeat == 'true' && 'minor') ||
+              (inputs.scope == 'breaking' && 'major') ||
+              (inputs.scope == 'feature' && 'minor') ||
               'patch'
             }}
         run: yarn version --${{ env.VersionLevel }}

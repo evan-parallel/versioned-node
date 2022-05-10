@@ -5,9 +5,6 @@ on:
       version_name:
         required: true
         type: string
-    secrets:
-      EVAN_PAT:
-        required: true
 jobs:
   build-release:
     runs-on: ubuntu-latest
