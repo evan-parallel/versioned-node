@@ -1,5 +1,8 @@
 name: versioning
 on: workflow_call
+  secrets:
+    EVAN_PAT:
+      required: true
 jobs:
   bump-version:
     runs-on: "ubuntu-latest"
