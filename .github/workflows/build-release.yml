@@ -1,8 +1,9 @@
 name: build-release
-on: workflow_call
-  secrets:
-    EVAN_PAT:
-      required: true
+on:
+  workflow_call:
+    secrets:
+      EVAN_PAT:
+        required: true
 jobs:
   build-release:
     runs-on: ubuntu-latest
