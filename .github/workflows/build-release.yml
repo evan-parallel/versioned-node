@@ -5,6 +5,9 @@ on:
       version_name:
         required: true
         type: string
+    secrets:
+      PAT:
+        required: false
 jobs:
   build-release:
     runs-on: ubuntu-latest
